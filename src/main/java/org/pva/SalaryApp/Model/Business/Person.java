@@ -1,9 +1,9 @@
-package org.pva.SalaryApp.Model;
+package org.pva.SalaryApp.Model.Business;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
@@ -13,8 +13,6 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @UniqueElements
     private String passportNumber;
 
     private String firstName;

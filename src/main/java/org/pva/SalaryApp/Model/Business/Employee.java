@@ -1,4 +1,4 @@
-package org.pva.SalaryApp.Model;
+package org.pva.SalaryApp.Model.Business;
 
 import javax.persistence.*;
 import java.util.Date;

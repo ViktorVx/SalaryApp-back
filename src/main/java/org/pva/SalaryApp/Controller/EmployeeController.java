@@ -1,6 +1,6 @@
 package org.pva.SalaryApp.Controller;
 
-import org.pva.SalaryApp.Model.Employee;
+import org.pva.SalaryApp.Model.Business.Employee;
 import org.pva.SalaryApp.Repository.EmployeeRepository;
 import org.pva.SalaryApp.Repository.PersonRepository;
 import org.pva.SalaryApp.Service.EmployeeService;
