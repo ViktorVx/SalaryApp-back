@@ -1,9 +1,9 @@
 package org.pva.SalaryApp.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.validator.constraints.UniqueElements;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -12,6 +12,10 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotNull
+    @UniqueElements
+    private String passportNumber;
 
     private String firstName;
 
@@ -31,7 +35,8 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public Person(String firstName, String lastName, String middleName, Date birthDate, Gender gender) {
+    public Person(String passportNumber, String firstName, String lastName, String middleName, Date birthDate, Gender gender) {
+        this.passportNumber = passportNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
@@ -45,6 +50,14 @@ public class Person {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPassportNumber() {
+        return passportNumber;
+    }
+
+    public void setPassportNumber(String passportNumber) {
+        this.passportNumber = passportNumber;
     }
 
     public String getFirstName() {
