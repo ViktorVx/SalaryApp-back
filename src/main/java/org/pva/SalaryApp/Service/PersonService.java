@@ -2,11 +2,13 @@ package org.pva.SalaryApp.Service;
 
 import javassist.NotFoundException;
 import org.pva.SalaryApp.Model.Business.Person;
+import org.pva.SalaryApp.Model.Dto.PersonResponse;
 import org.pva.SalaryApp.Model.Dto.Response;
 import org.pva.SalaryApp.Model.Dto.ResponseCode;
 import org.pva.SalaryApp.Repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +21,15 @@ public class PersonService {
         this.personRepository = personRepository;
     }
 
-    public List<Person> getAllPersons() {
-        return personRepository.findAll();
+    public Response getAllPersons() {
+        List<Person> personList = personRepository.findAll();
+        if (personList == null || personList.isEmpty()) {
+            return new Response(ResponseCode.FAIL, "No person in database");
+        } else {
+            PersonResponse personResponse = new PersonResponse(ResponseCode.SUCCESS, "Get persons");
+            personResponse.setPersonList(personList);
+            return personResponse;
+        }
     }
 
     public Response addNewPerson(Person person) {
@@ -29,6 +38,19 @@ public class PersonService {
             return new Response(ResponseCode.SUCCESS, "Add person successfully");
         } catch (Exception e) {
             return new Response(ResponseCode.FAIL, e.getMessage());
+        }
+    }
+
+    public Response getPersonById(Long personId) {
+        Optional<Person> personOptional = personRepository.findById(personId);
+        if (personOptional.isPresent()) {
+            List<Person> personList = new ArrayList<>();
+            personList.add(personOptional.get());
+            PersonResponse personResponse = new PersonResponse(ResponseCode.SUCCESS, "Get person");
+            personResponse.setPersonList(personList);
+            return personResponse;
+        } else {
+            return new Response(ResponseCode.FAIL, String.format("Person with %d id is absent", personId));
         }
     }
 
