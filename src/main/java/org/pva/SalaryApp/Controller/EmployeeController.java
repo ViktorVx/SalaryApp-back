@@ -1,14 +1,11 @@
 package org.pva.SalaryApp.Controller;
 
+import javassist.NotFoundException;
 import org.pva.SalaryApp.Model.Business.Employee;
-import org.pva.SalaryApp.Repository.EmployeeRepository;
-import org.pva.SalaryApp.Repository.PersonRepository;
+import org.pva.SalaryApp.Model.Dto.request.EmployeeRequest;
+import org.pva.SalaryApp.Model.Dto.response.Response;
 import org.pva.SalaryApp.Service.EmployeeService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -17,20 +14,33 @@ public class EmployeeController {
 
     private EmployeeService employeeService;
 
-    private PersonRepository personRepository;
-    private EmployeeRepository employeeRepository;
-
-    public EmployeeController(EmployeeService employeeService,
-                              PersonRepository personRepository,
-                              EmployeeRepository employeeRepository) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
-        this.personRepository = personRepository;
-        this.employeeRepository = employeeRepository;
     }
 
     @RequestMapping(path = "/list", method = RequestMethod.GET)
-    public List<Employee> getEmployees() {
+    public Response getAllEmployees() {
         return employeeService.getAllEmployees();
+    }
+
+    @RequestMapping(path = "/list/get", method = RequestMethod.GET)
+    public Response getEmployee(@RequestParam Long id) {
+        return employeeService.getEmployeeById(id);
+    }
+
+    @RequestMapping(path = "/add", method = RequestMethod.PUT)
+    public Response addNewEmployee(@RequestBody EmployeeRequest employeeRequest) {
+        return employeeService.addNewEmployee(employeeRequest);
+    }
+
+    @RequestMapping(path = "/update", method = RequestMethod.PATCH)
+    public Response updateEmployee(@RequestBody EmployeeRequest employeeRequest) throws NotFoundException {
+        return employeeService.updateEmployee(employeeRequest);
+    }
+
+    @RequestMapping(path = "/delete", method = RequestMethod.DELETE)
+    public Response deleteEmployee(@RequestParam Long id) {
+        return employeeService.deleteEmployee(id);
     }
 
 }

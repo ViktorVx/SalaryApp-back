@@ -2,7 +2,7 @@ package org.pva.SalaryApp.Controller;
 
 import javassist.NotFoundException;
 import org.pva.SalaryApp.Model.Business.Person;
-import org.pva.SalaryApp.Model.Dto.Response;
+import org.pva.SalaryApp.Model.Dto.response.Response;
 import org.pva.SalaryApp.Service.PersonService;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +37,8 @@ public class PersonController {
     }
 
     @RequestMapping(path = "/delete", method = RequestMethod.DELETE)
-    public Response deletePerson(@RequestBody Person person) {
-        return personService.deletePerson(person);
+    public Response deletePerson(@RequestParam Long id) {
+        return personService.deletePerson(id);
     }
 
 }

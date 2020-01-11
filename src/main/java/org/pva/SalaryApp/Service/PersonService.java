@@ -2,9 +2,9 @@ package org.pva.SalaryApp.Service;
 
 import javassist.NotFoundException;
 import org.pva.SalaryApp.Model.Business.Person;
-import org.pva.SalaryApp.Model.Dto.PersonResponse;
-import org.pva.SalaryApp.Model.Dto.Response;
-import org.pva.SalaryApp.Model.Dto.ResponseCode;
+import org.pva.SalaryApp.Model.Dto.response.ObjectListResponse;
+import org.pva.SalaryApp.Model.Dto.response.Response;
+import org.pva.SalaryApp.Model.Dto.response.ResponseCode;
 import org.pva.SalaryApp.Repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +26,8 @@ public class PersonService {
         if (personList == null || personList.isEmpty()) {
             return new Response(ResponseCode.FAIL, "No person in database");
         } else {
-            PersonResponse personResponse = new PersonResponse(ResponseCode.SUCCESS, "Get persons");
-            personResponse.setPersonList(personList);
+            ObjectListResponse<Person> personResponse = new ObjectListResponse(ResponseCode.SUCCESS, "Get persons");
+            personResponse.setObjectList(personList);
             return personResponse;
         }
     }
@@ -46,8 +46,8 @@ public class PersonService {
         if (personOptional.isPresent()) {
             List<Person> personList = new ArrayList<>();
             personList.add(personOptional.get());
-            PersonResponse personResponse = new PersonResponse(ResponseCode.SUCCESS, "Get person");
-            personResponse.setPersonList(personList);
+            ObjectListResponse<Person> personResponse = new ObjectListResponse(ResponseCode.SUCCESS, "Get person");
+            personResponse.setObjectList(personList);
             return personResponse;
         } else {
             return new Response(ResponseCode.FAIL, String.format("Person with %d id is absent", personId));
@@ -68,8 +68,7 @@ public class PersonService {
         }
     }
 
-    public Response deletePerson(Person person) {
-        Long id = person.getId();
+    public Response deletePerson(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Unknown person (id is absent)");
         }
