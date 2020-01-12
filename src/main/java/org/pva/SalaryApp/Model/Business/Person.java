@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
@@ -15,8 +17,10 @@ public class Person {
 
     private String passportNumber;
 
+    @NotBlank(message = "First name is empty")
     private String firstName;
 
+    @NotBlank(message = "Last name is empty")
     private String lastName;
 
     private String middleName;
@@ -24,6 +28,9 @@ public class Person {
     private Date birthDate;
 
     private Gender gender;
+
+    @Email
+    private String email;
 
     public Person() {
     }
@@ -96,5 +103,13 @@ public class Person {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
